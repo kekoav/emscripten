@@ -652,7 +652,12 @@ function new_(constructor, argumentList) {
      * isn't very helpful.  Using IMVU.createNamedFunction addresses the issue.  Doublely-unfortunately, there's no way
      * to write a test for this behavior.  -NRD 2013.02.22
      */
-    var dummy = createNamedFunction(constructor.name, function(){});
+    var name = constructor.name;
+    if (name == undefined) {
+        name = "Function"; // Fallback for IE
+    }
+
+    var dummy = createNamedFunction(name, function(){});
     dummy.prototype = constructor.prototype;
     var obj = new dummy;
 
